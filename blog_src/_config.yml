@@ -1,0 +1,16 @@
+# Site settings
+title: "TukuZaZa's"
+email: "foo@bar.com"
+description: "Blog of Krama"
+baseurl: "/"
+url: "http://tuxzz.github.io/blog"
+twitter_username: tuxzz
+github_username:  tuxzz
+paginate: 10
+paginate_path: "/pages/:num"
+timezone: "UTC"
+permalink: ":year/:month/:day/:title.html"
+safe: false
+
+# Build settings
+markdown: kramdown

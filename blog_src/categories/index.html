@@ -1,0 +1,21 @@
+---
+layout: default
+title: All Categories
+---
+
+<div class="ctx">
+<div class="cntr">
+    <div class="categories">
+        <h1>Categorys</h1>
+        <span class="item-count mpad">
+            {{ site.categories | size }} in total
+        </span>
+        <div class="mpad"></div>
+        <ul>
+            {% for category in site.categories %}
+                <li><a href="{{ site.url }}/categories/{{ category | first }}">{{ category | first }} ({{ category | last | size }})</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+</div>

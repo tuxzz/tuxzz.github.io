@@ -1,0 +1,12 @@
+{% assign sos_count = "0" %}
+{% for post in site.posts %}
+    {% assign sos = false %}
+    {% for category in post.categories %}
+        {% if category == "sky of sora" %}
+            {% assign notsos = true %}
+        {% endif %}
+    {% endfor %}
+    {% if sos %}
+        {% assign sos_count = sos_count | plus:1 %}
+    {% endif %}
+{% endfor %}

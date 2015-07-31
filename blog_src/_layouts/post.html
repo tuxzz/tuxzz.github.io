@@ -1,0 +1,35 @@
+---
+layout: default
+---
+<div class="ctx">
+    <div class="cntr">
+        <article>
+            <div class="head">
+                <h1 class="atc_title">{{ page.title }}</h1>
+                <span class="desc">{{ page.description }}</span>
+                <div class="stamp">
+                    <time>{{ page.date | date: '%m/%d/%Y %H:%M UTC' }}</time>
+                    <ul>
+                        {% for category in page.categories %}
+                            <li><a href="{{ site.url }}/categories/{{ category }}">{{ category }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {{ content }}
+            <div class="mpad"></div>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES * * */
+                var disqus_shortname = 'tuxzz';
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </article>
+    </div>
+</div> 
