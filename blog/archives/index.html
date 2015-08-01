@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Archives | TukuZaZa's</title>
     <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="tuxzz, tukuzaza">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -72,7 +72,7 @@
     
     <footer>
         <p>
-            &copy; TukuZaZa<br>
+            &copy;2015 TukuZaZa<br>
             BitMessage: BM-NB2k8tiv2gc23PZmrmNkgHr9iLyiN7gH<br>
             <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="CC-BY-NC-ND 4.0" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
         </p>
@@ -80,33 +80,31 @@
     </footer>
     
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/hljs.min.css">
+    <script src="/assets/js/highlight.pack.js" async onload="javascript:hljs.initHighlightingOnLoad();"></script>
     <script>
+        window.tbt = document.getElementById("topButton")
+        window.left = document.getElementById("left")
+        function showTopButton(){topButton.className = ""}
+        function hideTopButton(){topButton.className = "hidden"}
+        function toTop(){window.tsc = setInterval(function(){
+            document.body.scrollTop *= 0.8
+            if(document.body.scrollTop < 1)
+            {
+                document.body.scrollTop = 0
+                window.tsc = clearInterval(tsc)
+            }
+        }, 5)}
         function showLeft()
         {
-            left = document.getElementById("left")
             if(left.className === "left")
                 left.className = "left show"
             else
                 left.className = "left"
         }
-    </script>
-    <link rel="stylesheet" href="/assets/css/hljs.min.css">
-    <script src="/assets/js/highlight.pack.js" async onload="javascript:hljs.initHighlightingOnLoad();"></script>
-    <script>
-        window.tbt = document.getElementById("topButton");
-        function showTopButton(){topButton.className = ""}
-        function hideTopButton(){topButton.className = "hidden"}
-        function toTop(){window.tsc = self.setInterval(function(){
-            document.body.scrollTop *= 0.8;
-            if(document.body.scrollTop < 1)
-            {
-                document.body.scrollTop = 0;
-                window.tsc = window.clearInterval(tsc);
-            }
-        }, 5)}
-        function checkPosition(){if(document.body.scrollTop) showTopButton(); else hideTopButton();}
-        window.onscroll = checkPosition;
-        checkPosition();
+        function checkPosition(){if(document.body.scrollTop) showTopButton(); else hideTopButton()}
+        window.onscroll = checkPosition
+        checkPosition()
     </script>
 </body>
 </html>

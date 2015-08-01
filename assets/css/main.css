@@ -457,6 +457,23 @@ img
     {
         display: block;
     }
+    
+    .categories ul, .archives ul
+    {
+        padding-left: 0.1rem;
+        padding-right: 0.1rem;
+    }
+    
+    .articles h1, .categories h1, .archives h1
+    {
+        padding-left: 0.1rem;
+        padding-right: 0.1rem;
+    }
+    
+    .item-count
+    {
+        margin-left: 0.5rem;
+    }
 }
 
 .cf{float: clear;}
