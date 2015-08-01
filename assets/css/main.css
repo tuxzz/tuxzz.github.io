@@ -474,6 +474,11 @@ img
     {
         margin-left: 0.5rem;
     }
+    
+    .about article
+    {
+        margin-left: 0.1rem;
+    }
 }
 
 .cf{float: clear;}
