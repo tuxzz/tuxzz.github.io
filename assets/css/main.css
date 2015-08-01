@@ -363,6 +363,11 @@ article .stamp ul li a:hover
     color: #bbbbbb;
 }
 
+h2, h3, h4, h5, h6
+{
+    color: #9d0;
+}
+
 footer
 {
     margin: 1rem;
@@ -484,11 +489,6 @@ img
     .about article
     {
         margin-left: 0.1rem;
-    }
-    
-    h2, h3, h4, h5, h6
-    {
-        color: #9d0;
     }
 }
 
