@@ -21,7 +21,10 @@ layout: null
     </url>
     {% endfor %}{% for post in site.posts %}
     <url>
-        <loc>{{ site.url }}/{{ post.url }}</loc>
+        <loc>{{ site.url }}{{ post.url }}</loc>
     </url>
     {% endfor %}
+    <url>
+        <loc>{{ site.url }}/feed.xml</loc>
+    </url>
 </urlset> 

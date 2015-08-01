@@ -22,7 +22,10 @@
     </url>
     
     <url>
-        <loc>http://tuxzz.tk/blog//2015/07/31/hello-world.html</loc>
+        <loc>http://tuxzz.tk/blog/2015/07/31/hello-world.html</loc>
     </url>
     
+    <url>
+        <loc>http://tuxzz.tk/blog/feed.xml</loc>
+    </url>
 </urlset> 
