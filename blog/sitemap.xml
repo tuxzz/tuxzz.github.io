@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://tuxzz.tk/blog</loc>
+    </url>
+    <url>
+        <loc>http://tuxzz.tk/blog/categories</loc>
+    </url>
+    <url>
+        <loc>http://tuxzz.tk/blog/archives</loc>
+    </url>
+    <url>
+        <loc>http://tuxzz.tk/blog/about</loc>
+    </url>
+    
+    <url>
+        <loc>http://tuxzz.tk/blog/categories/碎碎念</loc>
+    </url>
+    
+    <url>
+        <loc>http://tuxzz.tk/blog/categories/測試</loc>
+    </url>
+    
+    <url>
+        <loc>http://tuxzz.tk/blog//2015/07/31/hello-world.html</loc>
+    </url>
+    
+</urlset> 
