@@ -9,7 +9,6 @@
     
 
 
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -26,6 +25,7 @@
     <link rel="stylesheet" href="/assets/css/main.min.css">
 </head>
 <body>
+    <!--[if lt IE9]><!-->
     <aside>
     <a id="topButton" href="javascript:toTop();"><span class="fa fa-arrow-up"></span></a>
     <div class="lbutton"><a href="javascript:showLeft();"><span class="fa fa-bars"></span></a></div>
@@ -148,5 +148,11 @@
         window.onscroll = checkPosition
         checkPosition()
     </script>
+    <!--[else]>
+    <link rel="stylesheet" href="/assets/css/fuckie.css">
+    <h1>NO IE!</h1>
+    <p>&copy;2015 TukuZaZa<br>
+    BitMessage: BM-NB2k8tiv2gc23PZmrmNkgHr9iLyiN7gH<br></p>
+    <!--<![endif]-->
 </body>
 </html>
