@@ -3,18 +3,18 @@
   <channel>
     <title>TukuZaZa&#39;s</title>
     <description>Blog of Krama</description>
-    <link>http://tuxzz.github.io/blog/</link>
-    <atom:link href="http://tuxzz.github.io/blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 01 Aug 2015 04:48:18 +0000</pubDate>
-    <lastBuildDate>Sat, 01 Aug 2015 04:48:18 +0000</lastBuildDate>
+    <link>http://tuxzz.tk/blog/</link>
+    <atom:link href="http://tuxzz.tk/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 01 Aug 2015 04:51:33 +0000</pubDate>
+    <lastBuildDate>Sat, 01 Aug 2015 04:51:33 +0000</lastBuildDate>
     <generator>TukuZaZa's</generator>
     
       <item>
         <title>Hello world!</title>
         <description>最初的開始</description>
         <pubDate>Fri, 31 Jul 2015 18:08:27 +0000</pubDate>
-        <link>http://tuxzz.github.io/blog/2015/07/31/hello-world.html</link>
-        <guid isPermaLink="true">http://tuxzz.github.io/blog/2015/07/31/hello-world.html</guid>
+        <link>http://tuxzz.tk/blog/2015/07/31/hello-world.html</link>
+        <guid isPermaLink="true">http://tuxzz.tk/blog/2015/07/31/hello-world.html</guid>
         
         <category>碎碎念</category>
         
