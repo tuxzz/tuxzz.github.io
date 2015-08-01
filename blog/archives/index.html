@@ -23,7 +23,7 @@
     <link rel="icon" type="image/png" href="/assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="TukuZaZa's" />
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/main.min.css">
 </head>
 <body>
     <aside>
@@ -90,11 +90,10 @@
                 left.className = "left"
         }
     </script>
-    <link rel="stylesheet" href="/assets/css/hljs.css">
-    <script src="/assets/js/highlight.pack.js"></script>
+    <link rel="stylesheet" href="/assets/css/hljs.min.css">
+    <script src="/assets/js/highlight.pack.js" async onload="function(){hljs.initHighlightingOnLoad();}"></script>
     <script>
-        window.topButton = document.getElementById("topButton");
-        hljs.initHighlightingOnLoad();
+        window.tbt = document.getElementById("topButton");
         function showTopButton(){topButton.className = ""}
         function hideTopButton(){topButton.className = "hidden"}
         function toTop(){window.tsc = self.setInterval(function(){

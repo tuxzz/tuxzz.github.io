@@ -23,7 +23,7 @@
     <link rel="icon" type="image/png" href="/assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="TukuZaZa's" />
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/main.min.css">
 </head>
 <body>
     <aside>
@@ -45,7 +45,7 @@
         <h1>
             TukuZaZa's Blog
         </h1>
-        <p>辛苦了，我是<ruby>木菟 佐蔵<rp>(</rp><rt>ツクザザ</rt><rp>)</rp></ruby>。</p>
+        <p>辛苦了，鄙人是<ruby>木菟 佐蔵<rp>(</rp><rt>ツクザザ</rt><rp>)</rp></ruby>。</p>
 
 <p>鄙是一名貧窮高中生，出生在兲朝。</p>
 
@@ -98,7 +98,7 @@
 
 <p>若閣下可以一次性捐助0.1BTC（多了也沒關係哦），鄙人可以滿足閣下一個小小願望（不要提不現實的願望:D）</p>
 
-<p>此乃鄙人之自我介紹。</p>
+<p>以上</p>
 
     </article>
 </div>
@@ -123,11 +123,10 @@
                 left.className = "left"
         }
     </script>
-    <link rel="stylesheet" href="/assets/css/hljs.css">
-    <script src="/assets/js/highlight.pack.js"></script>
+    <link rel="stylesheet" href="/assets/css/hljs.min.css">
+    <script src="/assets/js/highlight.pack.js" async onload="function(){hljs.initHighlightingOnLoad();}"></script>
     <script>
-        window.topButton = document.getElementById("topButton");
-        hljs.initHighlightingOnLoad();
+        window.tbt = document.getElementById("topButton");
         function showTopButton(){topButton.className = ""}
         function hideTopButton(){topButton.className = "hidden"}
         function toTop(){window.tsc = self.setInterval(function(){

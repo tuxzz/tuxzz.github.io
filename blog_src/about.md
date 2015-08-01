@@ -4,7 +4,7 @@ title: About TukuZaZa
 permalink: /about/
 ---
 
-辛苦了，我是<ruby>木菟 佐蔵<rp>(</rp><rt>ツクザザ</rt><rp>)</rp></ruby>。
+辛苦了，鄙人是<ruby>木菟 佐蔵<rp>(</rp><rt>ツクザザ</rt><rp>)</rp></ruby>。
 
 鄙是一名貧窮高中生，出生在兲朝。
 
@@ -48,7 +48,7 @@ permalink: /about/
 
 若閣下可以一次性捐助0.1BTC（多了也沒關係哦），鄙人可以滿足閣下一個小小願望（不要提不現實的願望:D）
 
-此乃鄙人之自我介紹。
+以上
 
 [水平線P]:     http://www.nicovideo.jp/user/20302970/
 [おどP]:      http://www.nicovideo.jp/mylist/6667938
