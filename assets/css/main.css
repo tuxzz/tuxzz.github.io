@@ -485,6 +485,11 @@ img
     {
         margin-left: 0.1rem;
     }
+    
+    .ctx article h2, h3, h4, h5, h6
+    {
+        color: #9d0;
+    }
 }
 
 .cf{float: clear;}
