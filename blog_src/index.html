@@ -14,7 +14,7 @@ title: TukuZaZa's
         </span>
         <div class="mpad"></div>
         <ul>
-            {% for post in site.posts %}
+            {% for post in paginator.posts %}
             {% assign notsos = true %}
             {% for category in post.categories %}
                 {% if category == "sky of sora" %}
