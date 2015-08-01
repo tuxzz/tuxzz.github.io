@@ -366,6 +366,7 @@ article .stamp ul li a:hover
 h2, h3, h4, h5, h6
 {
     color: #9d0;
+    text-shadow: 0 0 6px black;
 }
 
 footer
