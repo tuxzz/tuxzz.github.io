@@ -91,11 +91,6 @@ a:hover
     box-shadow: none;
 }
 
-article ul li
-{
-    display: block;
-}
-
 .cntr article
 {
     margin-left: 2rem;
