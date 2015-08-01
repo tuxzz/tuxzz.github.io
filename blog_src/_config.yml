@@ -13,4 +13,4 @@ permalink: ":year/:month/:day/:title.html"
 safe: false
 
 # Build settings
-markdown: kramdown
+markdown: rdiscount
