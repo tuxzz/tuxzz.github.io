@@ -22,7 +22,6 @@
     <link rel="icon" type="image/png" href="/assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
     <meta name="apple-mobile-web-app-title" content="TukuZaZa's" />
-    <link rel="stylesheet" href="/assets/css/main.min.css">
 </head>
 <body>
     <!--[if gte IE 9]><!-->
@@ -120,6 +119,7 @@
         <a href="/feed.xml"><span style="font-size: 24pt;" class="fa fa-rss-square"></span></a><br>
     </footer>
     
+    <link rel="stylesheet" href="/assets/css/main.min.css">
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/hljs.min.css">
     <script src="/assets/js/highlight.pack.js" async onload="javascript:hljs.initHighlightingOnLoad();"></script>
@@ -147,7 +147,7 @@
         window.onscroll = checkPosition
         checkPosition()
     </script>
-    <!--[else]>
+    <!--[if lt IE 9]>
     <link rel="stylesheet" href="/assets/css/fuckie.css">
     <h1>NO IE!</h1>
     <p>Use Chrome 30+, Firefox 20+ or IE9+ instead.</p>
