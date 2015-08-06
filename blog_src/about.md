@@ -54,8 +54,7 @@ permalink: /about/
 若想贊助鄙人，閣下可以通過
 
 * BTC: 1M9r7Cs9KQBNcgMasVZ52c9wFHYSuqHFLY
-
-若閣下可以一次性捐助0.1BTC（多了也沒關係哦），鄙人可以滿足閣下一個小小願望（不要提不現實的願望:D）
+* Alipay: dorazz@live.cn
 
 以上
 
