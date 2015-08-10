@@ -48,7 +48,6 @@ permalink: /about/
 ### 鄙的聯繫方式
 若想聯繫鄙人，閣下可以通過
 
-* 比特信：BM-NB2k8tiv2gc23PZmrmNkgHr9iLyiN7gH
 * Telegram: tuxzz
 
 若想贊助鄙人，閣下可以通過
