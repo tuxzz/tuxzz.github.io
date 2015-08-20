@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Title Here</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <style>
+        /* ==========================================================================
+        Component: AVG Grid
+        ============================================================================ */
+        [class*="am-avg-"] {
+        display: block;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        }
+        [class*="am-avg-"]:before,
+        [class*="am-avg-"]:after {
+        content: " ";
+        display: table;
+        }
+        [class*="am-avg-"]:after {
+        clear: both;
+        }
+        [class*="am-avg-"] > li {
+        display: block;
+        height: auto;
+        float: left;
+        }
+        @media only screen {
+            .am-avg-sm-3 > li {
+                width: 33.33333333%;
+            }
+            .am-avg-sm-3 > li:nth-of-type(n) {
+                clear: none;
+            }
+            .am-avg-sm-3 > li:nth-of-type(3n + 1) {
+                clear: both;
+            }
+        }
+        @media only screen and (min-width:641px) {
+            .am-avg-md-5 > li {
+                width: 20%;
+            }
+            .am-avg-md-5 > li:nth-of-type(n) {
+                clear: none;
+            }
+            .am-avg-md-5 > li:nth-of-type(5n + 1) {
+                clear: both;
+            }
+        }
+        @media only screen and (min-width:1025px) {
+            .am-avg-lg-8 > li {
+                width: 12.5%;
+            }
+            .am-avg-lg-8 > li:nth-of-type(n) {
+                clear: none;
+            }
+            .am-avg-lg-8 > li:nth-of-type(8n + 1) {
+                clear: both;
+            }
+        }
+    </style>
+</head>
+<body>
+    <ul class="am-avg-sm-3 am-avg-md-5 am-avg-lg-8">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+</body>
+</html>
