@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>PINBALL</title>
+<script src="/assets/js/victor.min.js"></script>
+
+</head>
+
+<body>
+
+<canvas id="myCanvas" onmousemove="onMoved(event)" onclick="onClicked(event)" width="800" height="600" style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+
+<script>
+
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+var gameStatus = "unplayed"
+var physicalEventLoop = -1
+var drawLoop = -1
+var lastTime = -1.0
+
+// static property
+var g = new Victor(0.0, 980) // unit: pixel/(s^2)
+var airResistance = 0.9999
+var ballRadius = 4
+
+var reflectionCost = 0.85
+
+var winPos = new Victor(24, 96)
+
+// dynmatic property
+var lastMousePos = new Victor(0, 0)
+var lastDrawMousePos = new Victor(0, 0)
+var mousePos = new Victor(0, 0)
+var mouseA = new Victor(982, 490)
+
+var lastBallPos = new Victor(0, 0)
+var lastDrawBallPos = new Victor(0, 0)
+var ballPos = new Victor(0, 0)
+var ballSpeed = new Victor(0.0, 0.0) // unit: pixel/s
+
+setGameStatus("unplayed")
+
+function setGameStatus(status) // "unplayed" or "gameover" or "win" or "playing"
+{
+    ctx.clearRect(0, 0, c.width, c.height)
+    
+    ctx.font="64px Arial";
+    if(status == "unplayed")
+        ctx.fillText("PINBALL", 272, 128);
+    else if(status == "gameover")
+        ctx.fillText("GAME OVER", 192, 128);
+    else if(status == "win")
+        ctx.fillText("YOU WON", 232, 128);
+    
+    if(status == "playing")
+    {
+        lastTime = -1.0
+        
+        // spawn a ball at the center of the canvas
+        lastBallPos = new Victor(0, 0)
+        lastDrawBallPos = new Victor(0, 0)
+        ballPos = new Victor(c.width * 0.5, c.height * 0.2)
+        ballSpeed = new Victor(0.0, 0.0)
+        
+        // random win pos
+        rx = Math.floor(Math.random() * c.width)
+        ry = Math.floor(Math.random() * (c.height / 2 - 40))
+        while(rx < 16 || rx > c.width - 16)
+            rx = Math.floor(Math.random() * c.width)
+        while(ry < 8)
+            ry = Math.floor(Math.random() * (c.height / 2 - 40))
+        winPos = new Victor(rx, ry)
+        
+        // begin physical emulation
+        physicalEventLoop = setInterval(processPhysical, 10)
+        
+        // begin graphic drawing
+        drawLoop = setInterval(redraw, 10)
+    }
+    else
+    {
+        clearInterval(physicalEventLoop)
+        physicalEventLoop = -1
+        lastTime = -1
+    }
+    
+    if(status == "unplayed" || status == "gameover" || status == "win")
+    {
+        ctx.font="24px Arial";
+        ctx.fillText("点击开始", 334, 320);
+    }
+    
+    gameStatus = status
+}
+
+function refVector(vec, normal)
+{
+    // R = I - 2(I * N) N, for which normal is unit vector
+    var R = vec.clone()
+    R.multiply(normal)
+    R.multiply(normal)
+    R.x *= 2.0
+    R.y *= 2.0
+    vec.subtract(R)
+}
+
+function processPhysical()
+{
+    if(lastTime == -1.0) // cannot calculate deltaTime while loop 1
+    {
+        lastTime = performance.now()
+        lastMousePos.copy(mousePos)
+        return
+    }
+    
+    var currTime = performance.now()
+    var deltaTime = (currTime - lastTime) / 1000.0 // now it is in second
+    
+    ballPos.x += ballSpeed.x * deltaTime
+    ballPos.y += ballSpeed.y * deltaTime
+    
+    // mouse force
+    if(ballPos.x >= mousePos.x - 20 && ballPos.x < mousePos.x + 20)
+        ballSpeed.y -= mouseA.x * deltaTime
+    if(ballPos.y >= mousePos.y - 20 && ballPos.y < mousePos.y + 20)
+        ballSpeed.x -= mouseA.y * deltaTime
+    
+    // bounding checking
+    
+    xb = false
+    yb = false
+    
+    if(ballPos.y >= c.height - ballRadius)
+    {
+        ballPos.y = c.height - ballRadius
+        var normal = new Victor(0.0, -1.0) // normal vector of a plane
+        refVector(ballSpeed, normal)
+        
+        if(Math.abs(ballSpeed.y) < 50.0)
+        {
+            setGameStatus("gameover")
+            ballSpeed.y = 0.0
+        }
+        
+        ballSpeed.x *= reflectionCost
+        ballSpeed.y *= reflectionCost
+        yb = true
+    }
+    else if(ballPos.y <= ballRadius)
+    {
+        ballPos.y = ballRadius
+        var normal = new Victor(0.0, 1.0) // normal vector of a plane
+        refVector(ballSpeed, normal)
+        
+        ballSpeed.x *= reflectionCost
+        ballSpeed.y *= reflectionCost
+        yb = true
+    }
+    
+    if(ballPos.x <= ballRadius)
+    {
+        ballPos.x = ballRadius
+        var normal = new Victor(1.0, 0.0)
+        refVector(ballSpeed, normal)
+        
+        ballSpeed.x *= reflectionCost
+        ballSpeed.y *= reflectionCost
+        xb = true
+    }
+    else if(ballPos.x > c.width - ballRadius)
+    {
+        ballPos.x = c.width - ballRadius
+        var normal = new Victor(-1.0, 0.0)
+        refVector(ballSpeed, normal)
+        
+        ballSpeed.x *= reflectionCost
+        ballSpeed.y *= reflectionCost
+        xb = true
+    }
+    
+    if(!xb)
+        ballSpeed.x += g.x * deltaTime
+    if(!yb)
+        ballSpeed.y += g.y * deltaTime
+    
+    ballSpeed.x *= airResistance
+    ballSpeed.y *= airResistance
+    
+    // win checking
+    if(ballPos.x >= winPos.x - 10 && ballPos.x < winPos.x + 10 && ballPos.y >= winPos.y && ballPos.y < winPos.y + 20)
+        setGameStatus("win")
+    
+    lastTime = currTime
+    lastMousePos.copy(mousePos)
+    lastBallPos.copy(ballPos)
+}
+
+function redraw()
+{
+    ctx.clearRect(lastDrawMousePos.x - 24, c.height - 8, 48, 16)
+    ctx.clearRect(c.width - 8, lastDrawMousePos.y - 24, 16, 48)
+    ctx.clearRect(lastDrawBallPos.x - ballRadius * 2, lastDrawBallPos.y - ballRadius * 2, ballRadius * 4, ballRadius * 4)
+    
+    // ball
+    ctx.beginPath()
+    ctx.arc(ballPos.x, ballPos.y, ballRadius, 0, 2 * Math.PI, true)
+    ctx.closePath()
+    ctx.fill()
+    lastDrawBallPos.copy(ballPos)
+    
+    // mouse
+    ctx.beginPath()
+    ctx.rect(mousePos.x - 20, c.height - 8, 40, 8)
+    ctx.rect(c.width - 8, mousePos.y - 20, 8, 40)
+    ctx.closePath()
+    ctx.fill()
+    lastDrawMousePos.copy(mousePos)
+    
+    // winpos(draw a flag)
+    ctx.beginPath()
+    ctx.moveTo(winPos.x - 10, winPos.y + 20)
+    ctx.lineTo(winPos.x - 10, winPos.y)
+    ctx.lineTo(winPos.x + 10, winPos.y)
+    ctx.lineTo(winPos.x + 10, winPos.y + 9)
+    ctx.lineTo(winPos.x - 8, winPos.y + 9)
+    ctx.lineTo(winPos.x - 8, winPos.y + 20)
+    ctx.closePath()
+    ctx.fill()
+}
+
+function onClicked(e)
+{
+    if(gameStatus != "playing")
+        setGameStatus("playing")
+}
+
+function onMoved(e)
+{
+    mousePos.x = e.offsetX
+    mousePos.y = e.offsetY
+}
+
+</script>
+
+</body>
+</html>
