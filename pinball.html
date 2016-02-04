@@ -10,9 +10,11 @@
 
 <body>
 
-<canvas id="myCanvas" onmousemove="onMoved(event)" onclick="onClicked(event)" width="800" height="600" style="border:1px solid #c3c3c3;">
+<div style="display: flex;">
+<canvas style="margin: auto; border:1px solid #c3c3c3;" id="myCanvas" onmousemove="onMoved(event)" onclick="onClicked(event)" width="800" height="600">
 Your browser does not support the canvas element.
 </canvas>
+</div>
 
 <script>
 
@@ -25,11 +27,34 @@ var drawLoop = -1
 var lastTime = -1.0
 
 // static property
-var g = new Victor(0.0, 980) // unit: pixel/(s^2)
-var airResistance = 0.9999
+var airResistance = parseFloat(getUrlParam('airResistance'))
+if(isNaN(airResistance))
+    airResistance = 0.9999
 var ballRadius = 4
 
-var reflectionCost = 0.85
+var gravityMode = getUrlParam('gravity')
+if(gravityMode == "taikon")
+{
+    airResistance = 0.999999999999999
+    var g = new Victor(0, 0) // unit: pixel/(s^2)
+}
+else if(gravityMode == "moon")
+{
+    airResistance = 0.9999999
+    var g = new Victor(0.0, 163)
+}
+else
+    var g = new Victor(0.0, 980)
+
+var mouseMode = getUrlParam('mouse')
+if(mouseMode == "cow")
+    var mouseA = new Victor(982 * 8, 240 * 16)
+else
+    var mouseA = new Victor(982, 240)
+
+var reflectionCost = parseFloat(getUrlParam('reflectionCost'))
+if(isNaN(reflectionCost))
+    reflectionCost = 0.85
 
 var winPos = new Victor(24, 96)
 
@@ -37,30 +62,91 @@ var winPos = new Victor(24, 96)
 var lastMousePos = new Victor(0, 0)
 var lastDrawMousePos = new Victor(0, 0)
 var mousePos = new Victor(0, 0)
-var mouseA = new Victor(982, 490)
 
 var lastBallPos = new Victor(0, 0)
 var lastDrawBallPos = new Victor(0, 0)
 var ballPos = new Victor(0, 0)
 var ballSpeed = new Victor(0.0, 0.0) // unit: pixel/s
 
+var startTime = 0.0
+
 setGameStatus("unplayed")
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
 
 function setGameStatus(status) // "unplayed" or "gameover" or "win" or "playing"
 {
-    ctx.clearRect(0, 0, c.width, c.height)
-    
     ctx.font="64px Arial";
     if(status == "unplayed")
-        ctx.fillText("PINBALL", 272, 128);
+    {
+        txtw = ctx.measureText("PINBALL").width
+        ctx.fillText("PINBALL", c.width / 2 - txtw / 2, 128);
+        if(mouseMode == "cow")
+        {
+            ctx.fillStyle = "red"
+            ctx.font="16px Arial";
+            txt = "WARNING: THIS GAME HAVE SUPER COW POWER"
+            txtw = ctx.measureText(txt).width
+            ctx.fillText(txt, c.width - txtw - 8, 24);
+            ctx.fillStyle = "black"
+        }
+        if(gravityMode == "taikon")
+        {
+            ctx.save()
+            ctx.font="32px Arial";
+            ctx.fillStyle = "black"
+            txt = "太空！！！！"
+            txtw = ctx.measureText("PINBALL").width
+            ctx.translate(c.width / 2 + txtw , 64);
+            ctx.rotate(45 * Math.PI / 180)
+            ctx.fillText(txt, 0, 0);
+            ctx.restore()
+        }
+        else if(gravityMode == "moon")
+        {
+            ctx.save()
+            ctx.font="32px Arial";
+            ctx.fillStyle = "black"
+            txt = "1/6"
+            txtw = ctx.measureText("PINBALL").width
+            ctx.translate(c.width / 2 + txtw , 96);
+            ctx.rotate(45 * Math.PI / 180)
+            ctx.fillText(txt, 0, 0);
+            ctx.restore()
+        }
+    }
     else if(status == "gameover")
-        ctx.fillText("GAME OVER", 192, 128);
+    {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.8)"
+        ctx.fillRect(0, 0, c.width, c.height)
+        ctx.fillStyle = "black"
+        txtw = ctx.measureText("GAME OVER").width
+        ctx.fillText("GAME OVER", c.width / 2 - txtw / 2, 128);
+        timeStr = ((new Date().getTime() - startTime) / 1000.0).toFixed(2).toString()
+        txtw = ctx.measureText(timeStr).width
+        ctx.fillText(timeStr, c.width / 2 - txtw / 2, 232)
+    }
     else if(status == "win")
-        ctx.fillText("YOU WON", 232, 128);
+    {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.8)"
+        ctx.fillRect(0, 0, c.width, c.height)
+        ctx.fillStyle = "black"
+        txtw = ctx.measureText("YOU WON").width
+        ctx.fillText("YOU WON", c.width / 2 - txtw / 2, 128);
+        timeStr = ((new Date().getTime() - startTime) / 1000.0).toFixed(2).toString()
+        txtw = ctx.measureText(timeStr).width
+        ctx.fillText(timeStr, c.width / 2 - txtw / 2, 232)
+    }
     
     if(status == "playing")
     {
+        ctx.clearRect(0, 0, c.width, c.height)
         lastTime = -1.0
+        startTime = new Date().getTime()
         
         // spawn a ball at the center of the canvas
         lastBallPos = new Victor(0, 0)
@@ -86,6 +172,7 @@ function setGameStatus(status) // "unplayed" or "gameover" or "win" or "playing"
     else
     {
         clearInterval(physicalEventLoop)
+        clearInterval(drawLoop)
         physicalEventLoop = -1
         lastTime = -1
     }
@@ -93,7 +180,8 @@ function setGameStatus(status) // "unplayed" or "gameover" or "win" or "playing"
     if(status == "unplayed" || status == "gameover" || status == "win")
     {
         ctx.font="24px Arial";
-        ctx.fillText("点击开始", 334, 320);
+        txtw = ctx.measureText("Click to play").width
+        ctx.fillText("Click to play", c.width / 2 - txtw / 2, 320);
     }
     
     gameStatus = status
@@ -206,6 +294,7 @@ function redraw()
     ctx.clearRect(lastDrawMousePos.x - 24, c.height - 8, 48, 16)
     ctx.clearRect(c.width - 8, lastDrawMousePos.y - 24, 16, 48)
     ctx.clearRect(lastDrawBallPos.x - ballRadius * 2, lastDrawBallPos.y - ballRadius * 2, ballRadius * 4, ballRadius * 4)
+    ctx.clearRect(0, 0, 120, 64)
     
     // ball
     ctx.beginPath()
@@ -232,6 +321,10 @@ function redraw()
     ctx.lineTo(winPos.x - 8, winPos.y + 20)
     ctx.closePath()
     ctx.fill()
+    
+    // time
+    ctx.font="18px Arial";
+    ctx.fillText(((new Date().getTime() - startTime) / 1000.0).toFixed(2).toString(), 8, 24)
 }
 
 function onClicked(e)
