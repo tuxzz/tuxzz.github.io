@@ -1,0 +1,13 @@
+{% extends "include/base.html" %}
+{% block title %}{{page.title|striptags}}{% endblock %}
+{% block pagetitle %}{{page.title|striptags}}{% endblock %}
+
+{% block headerAddational %}
+<div id="pagesubtitle">{{page.subtitle|striptags}}</div>
+{% endblock %}
+
+{% block pagecontent %}
+<article>
+{{ page.content }}
+</article>
+{% endblock %}

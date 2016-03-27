@@ -1,0 +1,16 @@
+{% extends "include/base.html" %}
+{% block title %}All Tags{% endblock %}
+{% block pagetitle %}All Tags{% endblock %}
+{% block pagecontent %}
+<ul class="postlist">
+    {% for tag, articles in tags|sort %}
+    <li>
+        <a href="{{SITEURL}}/{{tag.url}}"><div class="blayer"></div></a>
+        <div class="clayer">
+            <h3>{{tag}}</h3>
+            <div class="prop">{{articles|count}} articles in total</div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="content-language" content="en-us">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    
+    <title>{% block title %}{% endblock %}|{{ SITENAME }}</title>
+
+    <link rel="icon" type="image/png" href="/assets/i/favicon.png">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="TukuZaZa's">
+    <meta name="msapplication-TileImage" content="/assets/i/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+    <link rel="icon" sizes="192x192" href="/assets/i/app-icon72x72@2x.png">
+    <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
+    
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    
+    {% if FEED_ALL_ATOM %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
+    {% endif %}
+    {% if FEED_ALL_RSS %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
+    {% endif %}
+</head>
+
+<body class="preload">
+    <div id="state-indicator"></div>
+    <div id="toolbox">
+        <div id="topbutton" class="toolbutton"><a href="javascript:toTop();"><i class="fa fa-arrow-up"></i></a></div>
+        <div id="navbutton" class="toolbutton"><a href="javascript:switchNav();"><i class="fa fa-bars"></i></a></div>
+    </div>
+    <div id="navbar">
+        <div id="navtop">
+            <div id="navfore"></div>
+            <h1>{{SITENAME}}</h1>
+            <h2>{% block desc %}{{ SITEDESC }}{% endblock %}</h2>
+        </div>
+        <nav id="navmain">
+            <ul class="main">
+                <li><a href="{{SITEURL}}/"><div class="lbox">Home</div></a></li>
+                <li><a href="{{SITEURL}}/tags.html"><div class="lbox">Tag</div></a></li>
+                <li><a href="{{SITEURL}}/tag/fantasy"><div class="lbox">Fantasy</div></a></li>
+            </ul>
+            <ul class="bottom">
+                <li><a href="{{SITEURL}}/about"><div class="lbox">About</div></a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="main">
+        <header>
+            <div id="pagetitle"><h2>{% block pagetitle %}{% endblock %}</h2></div>
+            {% block headerAddational %}{% endblock %}
+        </header>
+        
+        <div id="pagecontent">
+            {% block pagecontent %}{% endblock %}
+        </div>
+        
+        <footer>
+            <div class="copyright">&copy;2016 <a rel="nofollow" href="https://github.com/tuxzz">TukuZaZa</a></div>
+            <a alt="CC-BY-NC-ND 4.0" rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img src="/assets/i/88x31.png" /></a>
+        </footer>
+    </div>
+    <script src="/assets/js/main.js" async defer></script>
+    <script>
+        /* crbug 332189 workaround */
+        window.onload = function() {document.body.className = "" }
+    </script>
+</body>
+
+</html>
