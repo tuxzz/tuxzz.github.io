@@ -1,2 +1,3 @@
-#!/bin/sh
-jekyll build --watch -s blog_src -d blog
+cd blog_src
+pelican content -s pelicanconf.py
+cd ..
