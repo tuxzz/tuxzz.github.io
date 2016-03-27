@@ -600,7 +600,7 @@ article a
     
     #main
     {
-        min-width: 2in;
+        min-width: 3in;
     }
     
     #pagecontent ul.postlist li h3
@@ -627,6 +627,7 @@ article a
 .highlight pre {
     display: block; padding: 0.5em;
     background: rgba(71, 73, 73, 0.585);
+    overflow-x: auto;
     color: #D1D9E1;
 }
 
