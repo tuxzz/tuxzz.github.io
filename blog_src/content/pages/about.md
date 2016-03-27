@@ -53,9 +53,10 @@ Date: 3/27/2016 18:56 +0800
 * Telegram: tuxzz
 
 若想赞助鄙人，阁下可以通过
-
-* BTC: 1M9r7Cs9KQBNcgMasVZ52c9wFHYSuqHFLY
-* Alipay: dorazz@live.cn
+```
+BTC: 1M9r7Cs9KQBNcgMasVZ52c9wFHYSuqHFLY
+Alipay: dorazz@live.cn
+```
 
 以上
 
