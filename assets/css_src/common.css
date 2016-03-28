@@ -509,10 +509,10 @@ article a
 .back
 {
     transition: all 0.2s;
-    -webkit-filter: blur(0.5in) saturate(1.2) contrast(2) brightness(4.0);
-    -moz-filter: blur(0.05in) saturate(1.2) contrast(2) brightness(4.0);
-    -ms-filter: blur(0.05in) saturate(1.2) contrast(2) brightness(4.0);
-    filter: blur(0.05in) saturate(1.2) contrast(2) brightness(4.0);
+    -webkit-filter: saturate(1.2) contrast(2) brightness(0.1);
+    -moz-filter: saturate(1.2) contrast(2) brightness(0.1);
+    -ms-filter: saturate(1.2) contrast(2) brightness(0.1);
+    filter: saturate(1.2) contrast(2) brightness(0.1);
 }
 
 .blocked
