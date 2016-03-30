@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = 'tuxzz'
 SITENAME = 'TukuZaZa'
 SITEDESC = 'Code · Blab · Fantasy'
-SITEURL = 'blog'
+SITEURL = '/blog'
 
 PATH = 'content'
 

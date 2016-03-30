@@ -21,7 +21,6 @@ from pelican import signals, contents
 from pelican.utils import get_date
 
 TXT_HEADER = """{0}/index.html
-{0}/archives.html
 {0}/tags.html
 """
 
@@ -61,7 +60,6 @@ class SitemapGenerator(object):
         self.context = context
         self.now = datetime.now()
         self.siteurl = settings.get('SITEURL')
-
 
         self.default_timezone = settings.get('TIMEZONE', 'UTC')
         self.timezone = getattr(self, 'timezone', self.default_timezone)
@@ -224,7 +222,6 @@ class SitemapGenerator(object):
                                                'save_as'])
 
             for standard_page_url in ['index.html',
-                                      'archives.html',
                                       'tags.html']:
                 fake = FakePage(status='published',
                                 date=self.now,
