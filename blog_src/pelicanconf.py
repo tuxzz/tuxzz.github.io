@@ -25,7 +25,7 @@ DEFAULT_PAGINATION = 10
 
 THEME = "themes/yume"
 STATIC_PATHS = ['assets',]
-PLUGINS = ['tipue_search', 'minify']
+PLUGINS = ['tipue_search', 'sitemap', 'minify']
 MD_EXTENSIONS = ['gfm', 'fenced_code']
 
 ARTICLE_URL = 'articles/{slug}/'
