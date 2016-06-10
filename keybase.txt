@@ -1,0 +1,75 @@
+==================================================================
+https://keybase.io/tuxzz
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://tuxzz.tk
+  * I am tuxzz (https://keybase.io/tuxzz) on keybase.
+  * I have a public key with fingerprint 3E83 BB53 63B5 6953 F99A  E9CC B356 A749 D378 14DD
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0120dc92e211aea962b80060fa6e538b960372e83322a36c2d282c4b1725c697cb630a",
+            "fingerprint": "3e83bb5363b56953f99ae9ccb356a749d37814dd",
+            "host": "keybase.io",
+            "key_id": "b356a749d37814dd",
+            "kid": "0101d80f6dca20d9ccef1894929e503d5e5cc82e8906274cdba5c0418fec31db885d0a",
+            "uid": "e480f50eb0f889efe17c4195b8763619",
+            "username": "tuxzz"
+        },
+        "service": {
+            "hostname": "tuxzz.tk",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1465523284,
+    "expire_in": 157680000,
+    "prev": "2b4c2bf11c25c7b1a7a28517a2743c3edb682578caea795c05dd2f6be64c6b85",
+    "seqno": 17,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.53
+Comment: https://keybase.io/crypto
+
+yMNsAnicbZJ7UBVlGMYPkdzRg5OGjEO0E4pBtNdvd5mupJCkUkZclJnj7rffwnbw
+nOO5weGiHAhQqBkGhdCyCEaPgpISTjXUKBrQwJDjAEElBmOmE+FtGgclqm+ZnOmP
+/tmdffd5ft/zvu/3Tbi/IcTvs0zfxpGixyb9hnrrXYasbaszSgjZqniIpBLCjBZf
+qEBBDqfJrClEEkFSNKlAkUY0RUlIEgEtCyQJSFUCiGMEWQQkw9NIYBialhgAaYUW
+aMjKFE9zEIg8lAFDSkQCoWqWPGS32TWLE2MZ7JBljgGMzAGRY1RRlJAIocxwQOJZ
+UWF4gWIVBRvzrQ7dgcPJkgMlalZcwx+mxXj/o3+Ym6QUgVSBAiXcAUYjlRJEVqRF
+xJGMwiEOQgEHF0lA8yxUZImDJEsJKoIMpciCwCmLuV2LOMRiFkcimVQFQUQqonjI
+UiInCzxgACXqQgeyW6SdCKudrqLiYqIsgcAltwaRPlW9jf/+TnSasclmtzqt0FqA
+q/lOpy1JNzk9Nl1ViGTTv36TrFkUPD9scCO7Q7NaiCQKK6FT04EUCziOZmiBTSBQ
+kU2zI5OmKzge4F2RpH4McmMkLbOQllWKgng5vExJvEQLHIWfPMtABikyEGiOFyDe
+NC/ieXCKQqtARoCFQBY4Qu9ol8WK2TzOKeVhpkPLs0hOlx0RZed7cx81+IUYApY8
+ol8sQ0iw8eF166s2GppKp4a6hn1rZ//Kvza5rqr/TKzSs/XM8cqS9ZoncdvujOrA
+Fa/U33Z5Ml8I3bQ2oO25/lRzWWr86qgY4/Aze57urPkwaGdepDF5YikbEhfaHPHl
+ndnSGLVj9DX/key23hz/j5WoeyOtlSvLA7ObgmYazr7+bWFH2Afxz74Br27glp7s
+OD920WcprNrRfTKgNefSyrGJU/ORzrppCxWWmtJ1+E6W23Shln45ef5Sb+KKoRON
+R731hu5atWO8cGzgdFhcyoMnuu9ubWq4e+/vvlUVplcfr6yLjgieIieZ7amDvrCZ
+9oATpbGDtuimhaCUY33vVP0profvr2n0bohtz969bKQ5fTx+rvPFnPcueFo3eyU1
+IvwHCpQe9rkW2PLrUc117b/uSMhoeclovu/9/dDMtQdH5+Y7z4bOHEnp/XzjJ1GF
+Tza/GxGaeXuLfXv5qs0LaVN1Mfv/CHmK2ecezSXSvNOjX90CN+YCh6TsiP0VXyTX
+uGevnuupSRt5O3eZeeynLmqyf88k83VB8FxbUnrukpx9RPREnSeO784KHB7oGa1i
+vxu4lZ6QuUm5YvyF93pbYtNSL/7246HiCqPv077Lwbx9trq1+OflXY0lfe0H7rcD
+a8vzQYO79rr2tl252VAw/uaWrLcu50VmHG8dq70RXstcT/m+Dd08V3a6+eC64elj
+C1PLxz864H/k1D9hcr1G
+=FdmR
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/tuxzz
+
+==================================================================
