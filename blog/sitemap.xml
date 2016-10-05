@@ -4,49 +4,49 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>http://tuxzz.tk/blog/</loc>
-<lastmod>2016-03-30T19:57:43-00:00</lastmod>
+<loc>https://tuxzz.tk/blog/</loc>
+<lastmod>2016-10-05T15:31:35-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://tuxzz.tk/blog/tags.html</loc>
-<lastmod>2016-03-30T19:57:43-00:00</lastmod>
+<loc>https://tuxzz.tk/blog/tags.html</loc>
+<lastmod>2016-10-05T15:31:35-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://tuxzz.tk/blog/about/</loc>
+<loc>https://tuxzz.tk/blog/about/</loc>
 <lastmod>2016-03-27T18:56:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.8</priority>
 </url>
 
 <url>
-<loc>http://tuxzz.tk/blog/articles/hello-world/</loc>
+<loc>https://tuxzz.tk/blog/articles/hello-world/</loc>
 <lastmod>2016-03-27T19:21:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://tuxzz.tk/blog/tag/blab</loc>
+<loc>https://tuxzz.tk/blog/tag/fantasy</loc>
 <lastmod>2016-03-27T19:21:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://tuxzz.tk/blog/tag/code</loc>
+<loc>https://tuxzz.tk/blog/tag/blab</loc>
 <lastmod>2016-03-27T19:21:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://tuxzz.tk/blog/tag/fantasy</loc>
+<loc>https://tuxzz.tk/blog/tag/code</loc>
 <lastmod>2016-03-27T19:21:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
