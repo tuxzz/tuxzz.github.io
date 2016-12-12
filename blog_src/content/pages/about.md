@@ -62,7 +62,7 @@ Alipay: dorazz@live.cn
 以上
 
 [Yeatce]: http://yeatce.com/
-[Phonenix]: https://blog.phoenixlzx.com
+[Phoenix]: https://blog.phoenixlzx.com/
 [水平线P]: http://www.nicovideo.jp/user/20302970/
 [おどP]: http://www.nicovideo.jp/mylist/6667938
 [とくP]: http://www.nicovideo.jp/mylist/12548022
