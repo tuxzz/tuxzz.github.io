@@ -5,14 +5,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://tuxzz.tk/blog/</loc>
-<lastmod>2016-12-12T21:11:01-00:00</lastmod>
+<lastmod>2016-12-12T21:16:20-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://tuxzz.tk/blog/tags.html</loc>
-<lastmod>2016-12-12T21:11:01-00:00</lastmod>
+<lastmod>2016-12-12T21:16:20-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -25,6 +25,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://tuxzz.tk/blog/articles/you-dian-lei-liao/</loc>
+<lastmod>2016-12-12T21:17:00+08:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://tuxzz.tk/blog/articles/hello-world/</loc>
 <lastmod>2016-03-27T19:21:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
@@ -32,14 +39,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://tuxzz.tk/blog/tag/code</loc>
-<lastmod>2016-03-27T19:21:00+08:06</lastmod>
+<loc>https://tuxzz.tk/blog/tag/blab</loc>
+<lastmod>2016-12-12T21:17:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://tuxzz.tk/blog/tag/blab</loc>
+<loc>https://tuxzz.tk/blog/tag/code</loc>
 <lastmod>2016-03-27T19:21:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
