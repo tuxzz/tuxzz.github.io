@@ -9,7 +9,8 @@ Date: 3/27/2016 18:56 +0800
 鄙是一名贫穷高中生，出生在兲朝。
 
 ### 鄙的朋友
-1. 又萌又好喝的[Yeatce][Yeatce]酱
+* 又萌又好喝的[Yeatce][Yeatce]酱
+* 可爱的凤凰卷[Phoenix]酱
 
 ### 鄙的世界观
 鄙是不坚定的二元论着，鄙有时会认为自己是一个旁观者，有时又会认为自己是世界的中心。
@@ -61,6 +62,7 @@ Alipay: dorazz@live.cn
 以上
 
 [Yeatce]: http://yeatce.com/
+[Phonenix]: https://blog.phoenixlzx.com
 [水平线P]: http://www.nicovideo.jp/user/20302970/
 [おどP]: http://www.nicovideo.jp/mylist/6667938
 [とくP]: http://www.nicovideo.jp/mylist/12548022
