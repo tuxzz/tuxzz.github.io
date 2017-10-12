@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>PINBALL</title>
+<script src="victor.min.js"></script>
+<meta http-equiv=X-UA-Compatible content=IE=edge>
+<meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv=content-language content=en-us>
+<meta name=renderer content=webkit><meta http-equiv=Cache-Control content=no-siteapp>
+
+<style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    @keyframes AnimStrong {
+        0% {
+            transform: rotate(-60deg) scale(1.0);
+        }
+
+        50% {
+            transform: rotate(-60deg) scale(1.25);
+        }
+
+        100% {
+            transform: rotate(-60deg) scale(1.0);
+        }
+    }
+
+    #subtitle {
+        animation: AnimStrong 1s infinite;
+    }
+</style>
+</head>
+
+<body onmousemove="onMoved(event)" onclick="onClicked(event)">
+<div id="gamePage" style="display: none">
+    <div id="timeText" style="position: fixed; left: 0; top: 0; font: arial, sans; font-size: 0.2in;">0.0</div>
+    <div id="ball" style="border: none; border-radius: 50%; background: red; width: 0.1in; height: 0.1in; position: fixed; left: 0; top: 0;"></div>
+    <div id="xblock" style="background: black; width: 0.5in; height: 0.1in; position: fixed; left: 0; bottom: 0; z-index: 10000;"></div>
+    <div id="yblock" style="background: black; width: 0.1in; height: 0.5in; position: fixed; right: 0; top: 0; z-index: 10000;"></div>
+    <div id="goal" style="width: 0.25in; height: 0.25in; position: fixed; left: 50%; top: 50%;">
+        <div style="background: black; width: 100%; height: 50%; position: absolute; left: 0; top: 0;"></div>
+        <div style="background: black; width: 10%; height: 50%; position: absolute; left: 0; top: 50%;"></div>
+    </div>
+
+    <div id="switchA" style="background: black; width: 0.25in; height: 0.25in; position: fixed; left: 20%; top: 50%;"></div>
+    <div id="switchB" style="background: black; width: 0.25in; height: 0.25in; position: fixed; left: 50%; top: 75%;"></div>
+    <div id="switchC" style="background: black; width: 0.25in; height: 0.25in; position: fixed; left: 80%; top: 50%;"></div>
+</div>
+<div id="titlePage" style = "position: fixed; background: rgba(255, 255, 255, 0.75); width: 100%; height: 100%;">
+    <div id="title" style="position: fixed; left: calc(50% - 3in); top: 12.5%; width: 6in; text-align: center; font: arial, sans; font-size: 0.75in;">
+        PINBALL
+        <div id="subtitle" style="color: #f1f114; text-shadow: 0 0 0.025in black; position: absolute; right: 1in; bottom: 0; width: 2in; text-align: center; font: arial, sans; font-size: 0.2in;"></div>
+    </div>
+    <div id="score" style="position: fixed; left: 0; top: calc(12.5% + 1in); width: 100%; text-align: center; font: arial, sans; font-size: 0.25in;"></div>
+    <div id="tips" style="position: fixed; left: 0; top: calc(12.5% + 2in); width: 100%; text-align: center; font: arial, sans; font-size: 0.25in;">Click to play</div>
+</div>
+<div id="overlay" style="position: fixed; width: 100%; height: 100%; z-index: 65536; left: 0; top: 0;"></div>
+<script>
+
+var gameStatus = "unplayed"
+var physicalEventLoop = -1
+var drawLoop = -1
+var lastTime = -1.0
+
+var gamePage = document.getElementById("gamePage")
+var titlePage = document.getElementById("titlePage")
+var ball = document.getElementById("ball")
+var goal = document.getElementById("goal")
+var xblock = document.getElementById("xblock")
+var yblock = document.getElementById("yblock")
+var timeText = document.getElementById("timeText")
+var title = document.getElementById("title")
+var subtitle = document.getElementById("subtitle")
+var tips = document.getElementById("tips")
+var score = document.getElementById("score")
+var switchA = document.getElementById("switchA")
+var switchB = document.getElementById("switchB")
+var switchC = document.getElementById("switchC")
+var switchStatus = [0, 0, 0]
+
+// static property
+var airResistance = parseFloat(getUrlParam('airResistance'))
+if(isNaN(airResistance))
+    airResistance = 0.9999
+
+var debug = getUrlParam('debug')
+
+var gravityMode = getUrlParam('gravity')
+var g = new Victor(0.0, 980)
+
+var mouseMode = getUrlParam('mouse')
+var mouseA = new Victor(982, 240)
+
+var reflectionCost = parseFloat(getUrlParam('reflectionCost'))
+if(isNaN(reflectionCost))
+    reflectionCost = 0.85
+
+var winPos = new Victor(24, 96)
+
+// dynmatic property
+var lastMousePos = new Victor(0, 0)
+var lastDrawMousePos = new Victor(0, 0)
+var mousePos = new Victor(0, 0)
+
+var lastBallPos = new Victor(0, 0)
+var lastDrawBallPos = new Victor(0, 0)
+var ballPos = new Victor(0, 0)
+var ballSpeed = new Victor(0.0, 0.0) // unit: pixel/s
+
+var startTime = 0.0
+var lastSwitchTime = [0.0, 0.0, 0.0]
+
+var zeroBeta = 0.0
+var zeroGamma = 0.0
+
+setGameStatus("unplayed")
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+
+function setGameStatus(status) // "unplayed" or "gameover" or "win" or "playing"
+{
+    var hasObj = function(arr, x)
+    {
+        for(var i = 0; i < arr.length; ++i)
+        {
+            if(arr[i] === x)
+                return true
+        }
+        return false
+    }
+    if(status === "gameover")
+    {
+        titlePage.style.display = "block"
+        title.innerHTML = 'Game Over<div id="subtitle" style="color: #f1f114; text-shadow: 0 0 0.025in black; position: absolute; right: 1in; bottom: 0; width: 2in; text-align: center; font: arial, sans; font-size: 0.2in;"></div>'
+        subtitle = document.getElementById("subtitle")
+        score.innerText = ((new Date().getTime() - startTime) / 1000.0).toFixed(2).toString()
+    }
+    else if(status === "win")
+    {
+        titlePage.style.display = "block"
+        title.innerHTML = 'YOU WON<div id="subtitle" style="color: #f1f114; text-shadow: 0 0 0.025in black; position: absolute; right: 1in; bottom: 0; width: 2in; text-align: center; font: arial, sans; font-size: 0.2in;"></div>'
+        subtitle = document.getElementById("subtitle")
+        score.innerText = ((new Date().getTime() - startTime) / 1000.0).toFixed(2).toString()
+        if(switchStatus[0] == 1 && switchStatus[1] == 1 && switchStatus[2] == 1)
+        {
+            console.log("before", mouseMode)
+            if(mouseMode === "cow")
+                mouseMode = ""
+            else
+                mouseMode = "cow"
+        }
+        else if(switchStatus[0] == 2 && switchStatus[1] == 2 && switchStatus[2] == 2)
+        {
+            if(gravityMode === "taikon")
+                gravityMode = ""
+            else
+                gravityMode = "taikon"
+        }
+        else if(switchStatus[0] == 3 && switchStatus[1] == 3 && switchStatus[2] == 3)
+        {
+            if(gravityMode === "moon")
+                gravityMode = ""
+            else
+                gravityMode = "moon"
+        }
+        else if(hasObj(switchStatus, 1) && hasObj(switchStatus, 2) && hasObj(switchStatus, 3))
+            tips.innerText = "In next turn, you can click LMB to place the ball into anywhere!"
+        else
+            tips.innerText = "Click to play"
+    }
+    
+    if(status === "playing")
+    {
+        switchStatus = [0, 0, 0]
+        titlePage.style.display = "none"
+        gamePage.style.display = "block"
+        lastTime = -1.0
+        startTime = new Date().getTime()
+        
+        // spawn a ball at the center of the canvas
+        lastBallPos = new Victor(0, 0)
+        lastDrawBallPos = new Victor(0, 0)
+        ballPos = new Victor(document.body.clientWidth * 0.5, document.body.clientHeight * 0.2)
+        ballSpeed = new Victor(0.0, 0.0)
+        
+        // random win pos
+        var genRandomPos = function(bx, by, lx, ly)
+        {
+            var rx = Math.random() * (lx - bx * 2) + bx
+            var ry = Math.random() * (ly - by * 2) + by
+            return [rx, ry]
+        }
+        var [rx, ry] = genRandomPos(goal.clientWidth, goal.clientHeight, document.body.clientWidth, document.body.clientHeight / 2)
+        winPos = new Victor(rx, ry)
+        var [rx, ry] = genRandomPos(goal.clientWidth, goal.clientHeight, document.body.clientWidth, document.body.clientHeight)
+        switchA.style.left = rx + "px"
+        switchA.style.top = ry + "px"
+        var [rx, ry] = genRandomPos(goal.clientWidth, goal.clientHeight, document.body.clientWidth, document.body.clientHeight)
+        switchB.style.left = rx + "px"
+        switchB.style.top = ry + "px"
+        var [rx, ry] = genRandomPos(goal.clientWidth, goal.clientHeight, document.body.clientWidth, document.body.clientHeight)
+        switchC.style.left = rx + "px"
+        switchC.style.top = ry + "px"
+        
+        // begin physical emulation
+        physicalEventLoop = setInterval(processPhysical, 4)
+        
+        // begin graphic drawing
+        drawLoop = setInterval(function(){window.requestAnimationFrame(redraw)}, 4)
+    }
+    else
+    {
+        clearInterval(physicalEventLoop)
+        clearInterval(drawLoop)
+        physicalEventLoop = -1
+        lastTime = -1
+    }
+    
+    if(status == "unplayed" || status == "gameover")
+        tips.innerText = "Click to play"
+    
+    if(gravityMode == "taikon")
+    {
+        subtitle.innerText = "太空！！！！\n"
+        airResistance = 0.999999999999999
+        g = new Victor(0, 0) // unit: pixel/(s^2)
+    }
+    else if(gravityMode == "moon")
+    {
+        airResistance = 0.9999999
+        g = new Victor(0.0, 163)
+        subtitle.innerText = "1/6\n"
+    }
+    else
+    {
+        subtitle.innerText = ""
+        airResistance = 0.9999
+        g = new Victor(0.0, 980)
+    }
+    if(mouseMode == "cow")
+    {
+        subtitle.innerText += "WARNING: THIS GAME HAVE SUPER COW POWER"
+        subtitle.style.color = "red"
+        mouseA = new Victor(982 * 8, 240 * 16)
+    }
+    else
+        mouseA = new Victor(982, 240)
+    
+    gameStatus = status
+}
+
+function refVector(vec, normal)
+{
+    // R = I - 2(I * N) N, for which normal is unit vector
+    var R = vec.clone()
+    R.multiply(normal)
+    R.multiply(normal)
+    R.x *= 2.0
+    R.y *= 2.0
+    vec.subtract(R)
+}
+
+function processPhysical()
+{
+    if(lastTime == -1.0) // cannot calculate deltaTime while loop 1
+    {
+        lastTime = performance.now()
+        lastMousePos.copy(mousePos)
+        return
+    }
+    
+    var currTime = performance.now()
+    var deltaTime = (currTime - lastTime) / 1000.0 // now it is in second
+    
+    ballPos.x += ballSpeed.x * deltaTime
+    ballPos.y += ballSpeed.y * deltaTime
+    
+    // mouse force
+    if(ballPos.x >= mousePos.x - xblock.clientWidth / 2 && ballPos.x < mousePos.x + xblock.clientWidth / 2)
+        ballSpeed.y -= mouseA.x * deltaTime
+    if(ballPos.y >= mousePos.y - yblock.clientHeight / 2 && ballPos.y < mousePos.y + yblock.clientHeight / 2)
+        ballSpeed.x -= mouseA.y * deltaTime
+    
+    // bounding checking
+    
+    xb = false
+    yb = false
+
+    var ballRadius = ball.clientWidth / 2
+    if(ballPos.y >= document.body.clientHeight - ballRadius)
+    {
+        ballPos.y = document.body.clientHeight - ballRadius
+        var normal = new Victor(0.0, -1.0) // normal vector of a plane
+        refVector(ballSpeed, normal)
+        
+        if(Math.abs(ballSpeed.y) < 50.0)
+        {
+            setGameStatus("gameover")
+            ballSpeed.y = 0.0
+        }
+        
+        ballSpeed.x *= reflectionCost
+        ballSpeed.y *= reflectionCost
+        yb = true
+    }
+    else if(ballPos.y <= ballRadius)
+    {
+        ballPos.y = ballRadius
+        var normal = new Victor(0.0, 1.0) // normal vector of a plane
+        refVector(ballSpeed, normal)
+        
+        ballSpeed.x *= reflectionCost
+        ballSpeed.y *= reflectionCost
+        yb = true
+    }
+    
+    if(ballPos.x <= ballRadius)
+    {
+        ballPos.x = ballRadius
+        var normal = new Victor(1.0, 0.0)
+        refVector(ballSpeed, normal)
+        
+        ballSpeed.x *= reflectionCost
+        ballSpeed.y *= reflectionCost
+        xb = true
+    }
+    else if(ballPos.x > document.body.clientWidth - ballRadius)
+    {
+        ballPos.x = document.body.clientWidth - ballRadius
+        var normal = new Victor(-1.0, 0.0)
+        refVector(ballSpeed, normal)
+        
+        ballSpeed.x *= reflectionCost
+        ballSpeed.y *= reflectionCost
+        xb = true
+    }
+    
+    if(!xb)
+        ballSpeed.x += g.x * deltaTime
+    if(!yb)
+        ballSpeed.y += g.y * deltaTime
+    
+    ballSpeed.x *= airResistance
+    ballSpeed.y *= airResistance
+    
+    // win checking
+    if(ballPos.x >= winPos.x - goal.clientWidth / 2 && ballPos.x <= winPos.x + goal.clientWidth / 2 && ballPos.y >= winPos.y - goal.clientHeight / 2 && ballPos.y <= winPos.y + goal.clientHeight / 2)
+    {
+        redraw()
+        setGameStatus("win")
+    }
+    
+    var checkSwitch = function(s)
+    {
+        return ballPos.x > s.offsetLeft - ballRadius && ballPos.x < s.offsetLeft + ballRadius + s.clientWidth && ballPos.y > s.offsetTop - ballRadius && ballPos.y < s.offsetTop + ballRadius + s.clientHeight
+    }
+
+    if(checkSwitch(switchA) && (performance.now() - lastSwitchTime[0]) >= 500)
+    {
+        switchStatus[0] = (switchStatus[0] + 1) % 4
+        lastSwitchTime[0] = performance.now()
+    }
+    if(checkSwitch(switchB) && (performance.now() - lastSwitchTime[1]) >= 500)
+    {
+        switchStatus[1] = (switchStatus[1] + 1) % 4
+        lastSwitchTime[1] = performance.now()
+    }
+    if(checkSwitch(switchC) && (performance.now() - lastSwitchTime[2]) >= 500)
+    {
+        switchStatus[2] = (switchStatus[2] + 1) % 4
+        lastSwitchTime[2] = performance.now()
+    }
+
+    lastTime = currTime
+    lastMousePos.copy(mousePos)
+    lastBallPos.copy(ballPos)
+}
+
+function redraw()
+{
+    // ball
+    ball.style.left = (ballPos.x - ball.clientWidth / 2) + "px"
+    ball.style.top = (ballPos.y - ball.clientHeight / 2) + "px"
+    lastDrawBallPos.copy(ballPos)
+    
+    // winpos(draw a flag)
+    goal.style.left = (winPos.x - goal.clientWidth / 2) + "px"
+    goal.style.top = (winPos.y - goal.clientHeight / 2) + "px"
+    
+    // time
+    timeText.innerText = ((new Date().getTime() - startTime) / 1000.0).toFixed(2).toString(), 8, 24
+
+    // switch
+    var l = [switchA, switchB, switchC]
+    for(var i = 0; i < l.length; ++i)
+    {
+        if(switchStatus[i] == 0)
+        {
+            l[i].style.background = "black"
+            l[i].style.boxShadow = "none"
+        }
+        else
+        {
+            l[i].style.boxShadow = "0 0 0.1in 0.05in black"
+            if(switchStatus[i] == 1)
+                l[i].style.background = "#f00"
+            else if(switchStatus[i] == 2)
+                l[i].style.background = "#0f0"
+            else if(switchStatus[i] == 3)
+                l[i].style.background = "#00f"
+            else
+                console.error("invalid switch status")
+        }
+    }
+}
+
+function onClicked(e)
+{
+    if(gameStatus != "playing")
+        setGameStatus("playing")
+    if(debug)
+    {
+        ballPos.x = e.offsetX
+        ballPos.y = e.offsetY
+    }
+}
+
+function onMoved(e)
+{
+    mousePos.x = e.offsetX
+    mousePos.y = e.offsetY
+    xblock.style.left = mousePos.x - xblock.clientWidth / 2 + "px"
+    yblock.style.top = mousePos.y - yblock.clientHeight / 2 + "px"
+}
+
+function onTiled(e)
+{
+    if(zeroGamma === 0.0)
+        zeroGamma = e.gamma
+    if(zeroBeta === 0.0)
+        zeroBeta = e.beta
+    var g = e.gamma - zeroGamma
+    var b = e.beta - zeroBeta
+    onMoved({
+        "offsetX": (g + 45.0) / 90.0 * document.body.clientWidth,
+        "offsetY": (b + 45.0) / 90.0 * document.body.clientHeight
+    })
+}
+
+window.addEventListener("deviceorientation", onTiled)
+
+</script>
+
+</body>
+</html>
